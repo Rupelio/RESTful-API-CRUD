@@ -1,13 +1,14 @@
 // config inicial
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
 
 // forma de ler JSON / middlewares
 app.use(
-  express.urlencoded({
-    extended: true,
-  })
+    express.urlencoded({
+        extended: true,
+    })
 );
 
 app.use(express.json());
@@ -19,21 +20,21 @@ app.use('/person', personRoutes);
 
 // rota inicial / endpoint
 app.get('/', (req, res) => {
-  // mostar req
+    // mostar req
 
-  res.json({ message: 'Oi Express!' });
+    res.json({ message: 'Oi Express!' });
 });
 
 // entregar uma porta
-const DB_USER = 'rupeliojunior445';
-const DB_PASSWORD = encodeURIComponent('GjhIVot7WR9I5Pc6');
+const DB_USER = process.env.DB_USER;
+const DB_PASSWORD = encodeURIComponent(process.env.DB_PASSWORD);
 
 mongoose
-  .connect(
-    `mongodb+srv://${DB_USER}:${DB_PASSWORD}@apicluster.qxr8234.mongodb.net/?retryWrites=true&w=majority&appName=APICluste`
-  )
-  .then(() => {
-    console.log('Conectamos ao MongoDB!');
-    app.listen(3000);
-  })
-  .catch((err) => console.log(err));
+    .connect(
+        `mongodb+srv://${DB_USER}:${DB_PASSWORD}@apicluster.qxr8234.mongodb.net/?retryWrites=true&w=majority&appName=APICluste`
+    )
+    .then(() => {
+        console.log('Conectamos ao MongoDB!');
+        app.listen(3000);
+    })
+    .catch((err) => console.log(err));
